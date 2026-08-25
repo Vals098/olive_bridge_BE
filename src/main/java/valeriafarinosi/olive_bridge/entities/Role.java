@@ -8,7 +8,7 @@ import lombok.ToString;
 import java.util.UUID;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 @NoArgsConstructor
 @Getter
 @ToString
@@ -20,5 +20,9 @@ public class Role {
 
     @Column(nullable = false)
     private String name;
+
+    public Role(String name) {
+        this.name = name;
+    }
 
 }
