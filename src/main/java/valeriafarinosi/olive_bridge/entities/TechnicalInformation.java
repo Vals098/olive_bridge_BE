@@ -1,9 +1,6 @@
 package valeriafarinosi.olive_bridge.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -23,12 +20,16 @@ public class TechnicalInformation {
     @GeneratedValue
     private UUID technicalInformationId;
 
+    @Column(nullable = false)
     private BigDecimal acidity;
 
+    @Column(nullable = false)
     private BigDecimal peroxideValue;
 
+    @Column(nullable = false)
     private LocalDate harvestDate;
 
+    @Column(nullable = false)
     private LocalDate bestBeforeDate;
 
     public TechnicalInformation(
