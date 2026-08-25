@@ -33,13 +33,18 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ActiveStatus status;
 
-//    category and techniclInformation relationships to be added
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
-    public Product(String name, String description, String image, ActiveStatus status) {
+//    techniclInformation relationship to be added
+
+    public Product(String name, String description, String image, ActiveStatus status, Category category) {
         this.name = name;
         this.description = description;
         this.image = image;
         this.status = status;
+        this.category = category;
     }
 
 
