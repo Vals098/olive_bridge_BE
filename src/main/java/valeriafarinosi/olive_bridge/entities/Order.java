@@ -19,7 +19,13 @@ public class Order {
 
     @Id
     @GeneratedValue
-    private UUID productId;
+    private UUID orderId;
+
+    //    guest customers are not users but can place orders.
+//    user must be nullable
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(nullable = false)
     private LocalDateTime orderDate;
@@ -53,8 +59,30 @@ public class Order {
 
     private String shippingBuilding;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    public Order(
+            User user,
+            LocalDateTime orderDate,
+            BigDecimal total,
+            OrderStatus status,
+            String shippingRecipientName,
+            String shippingPostalCode,
+            String shippingPrefecture,
+            String shippingCity,
+            String shippingArea,
+            String shippingStreet,
+            String shippingBuilding
+    ) {
+        this.user = user;
+        this.orderDate = orderDate;
+        this.total = total;
+        this.status = status;
+        this.shippingRecipientName = shippingRecipientName;
+        this.shippingPostalCode = shippingPostalCode;
+        this.shippingPrefecture = shippingPrefecture;
+        this.shippingCity = shippingCity;
+        this.shippingArea = shippingArea;
+        this.shippingStreet = shippingStreet;
+        this.shippingBuilding = shippingBuilding;
+    }
 
 }
