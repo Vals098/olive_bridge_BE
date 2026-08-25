@@ -37,8 +37,12 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "technical_information_id", nullable = false)
+    @OneToOne
+    @JoinColumn(
+            name = "technical_information_id",
+            nullable = false,
+            unique = true
+    )
     private TechnicalInformation technicalInformation;
 
     public Product(String name, String description, String image, ActiveStatus status, Category category, TechnicalInformation technicalInformation) {
