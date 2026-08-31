@@ -12,14 +12,16 @@ import valeriafarinosi.olive_bridge.security.JWTTools;
 @Service
 public class AuthService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     private JWTTools jwtTools;
+
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public String authenticateAndGenerateToken(LoginRequestDTO body) {
 
