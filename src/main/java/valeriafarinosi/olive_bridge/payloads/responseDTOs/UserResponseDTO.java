@@ -1,4 +1,4 @@
-package valeriafarinosi.olive_bridge.payloads;
+package valeriafarinosi.olive_bridge.payloads.responseDTOs;
 
 import valeriafarinosi.olive_bridge.enums.AccountType;
 import valeriafarinosi.olive_bridge.enums.ActiveStatus;

@@ -1,4 +1,4 @@
-package valeriafarinosi.olive_bridge.payloads;
+package valeriafarinosi.olive_bridge.payloads.requestDTOs;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
