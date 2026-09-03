@@ -5,14 +5,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import valeriafarinosi.olive_bridge.entities.Category;
 import valeriafarinosi.olive_bridge.entities.Role;
+import valeriafarinosi.olive_bridge.entities.TechnicalInformation;
 import valeriafarinosi.olive_bridge.entities.User;
 import valeriafarinosi.olive_bridge.enums.AccountType;
 import valeriafarinosi.olive_bridge.enums.ActiveStatus;
 import valeriafarinosi.olive_bridge.repositories.CategoryRepository;
 import valeriafarinosi.olive_bridge.repositories.RoleRepository;
-
+import valeriafarinosi.olive_bridge.repositories.TechnicalInformationRepository;
 import valeriafarinosi.olive_bridge.repositories.UserRepository;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -22,18 +25,19 @@ public class DataSeeder implements CommandLineRunner {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CategoryRepository categoryRepository;
+    private final TechnicalInformationRepository technicalInformationRepository;
 
 
     public DataSeeder(
             RoleRepository roleRepository,
             UserRepository userRepository,
-            PasswordEncoder passwordEncoder, CategoryRepository categoryRepository
+            PasswordEncoder passwordEncoder, CategoryRepository categoryRepository, TechnicalInformationRepository technicalInformationRepository
     ) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.categoryRepository = categoryRepository;
-
+        this.technicalInformationRepository = technicalInformationRepository;
     }
 
     @Override
@@ -105,5 +109,35 @@ public class DataSeeder implements CommandLineRunner {
 
             categoryRepository.saveAll(List.of(extraVirgin, organic, flavoured));
         }
+
+        // Populate technical information
+        if (technicalInformationRepository.count() == 0) {
+
+            TechnicalInformation technicalInfo1 = new TechnicalInformation(
+                    new BigDecimal("0.25"),
+                    new BigDecimal("8.50"),
+                    LocalDate.of(2025, 10, 15),
+                    LocalDate.of(2027, 10, 15)
+            );
+
+            TechnicalInformation technicalInfo2 = new TechnicalInformation(
+                    new BigDecimal("0.30"),
+                    new BigDecimal("9.20"),
+                    LocalDate.of(2025, 11, 5),
+                    LocalDate.of(2027, 11, 5)
+            );
+
+            TechnicalInformation technicalInfo3 = new TechnicalInformation(
+                    new BigDecimal("0.20"),
+                    new BigDecimal("7.80"),
+                    LocalDate.of(2025, 10, 28),
+                    LocalDate.of(2027, 10, 28)
+            );
+
+            technicalInformationRepository.saveAll(
+                    List.of(technicalInfo1, technicalInfo2, technicalInfo3)
+            );
+        }
+
     }
 }
