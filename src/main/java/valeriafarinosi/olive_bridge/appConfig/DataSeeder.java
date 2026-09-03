@@ -3,16 +3,10 @@ package valeriafarinosi.olive_bridge.appConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import valeriafarinosi.olive_bridge.entities.Category;
-import valeriafarinosi.olive_bridge.entities.Role;
-import valeriafarinosi.olive_bridge.entities.TechnicalInformation;
-import valeriafarinosi.olive_bridge.entities.User;
+import valeriafarinosi.olive_bridge.entities.*;
 import valeriafarinosi.olive_bridge.enums.AccountType;
 import valeriafarinosi.olive_bridge.enums.ActiveStatus;
-import valeriafarinosi.olive_bridge.repositories.CategoryRepository;
-import valeriafarinosi.olive_bridge.repositories.RoleRepository;
-import valeriafarinosi.olive_bridge.repositories.TechnicalInformationRepository;
-import valeriafarinosi.olive_bridge.repositories.UserRepository;
+import valeriafarinosi.olive_bridge.repositories.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,18 +20,20 @@ public class DataSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final CategoryRepository categoryRepository;
     private final TechnicalInformationRepository technicalInformationRepository;
+    private final ProductRepository productRepository;
 
 
     public DataSeeder(
             RoleRepository roleRepository,
             UserRepository userRepository,
-            PasswordEncoder passwordEncoder, CategoryRepository categoryRepository, TechnicalInformationRepository technicalInformationRepository
+            PasswordEncoder passwordEncoder, CategoryRepository categoryRepository, TechnicalInformationRepository technicalInformationRepository, ProductRepository productRepository
     ) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.categoryRepository = categoryRepository;
         this.technicalInformationRepository = technicalInformationRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -137,6 +133,47 @@ public class DataSeeder implements CommandLineRunner {
             technicalInformationRepository.saveAll(
                     List.of(technicalInfo1, technicalInfo2, technicalInfo3)
             );
+        }
+
+        // Populate products
+        if (productRepository.count() == 0) {
+
+            Category extraVirgin = categoryRepository.findAll().get(0);
+            Category organic = categoryRepository.findAll().get(1);
+            Category flavoured = categoryRepository.findAll().get(2);
+
+            TechnicalInformation technicalInfo1 = technicalInformationRepository.findAll().get(0);
+            TechnicalInformation technicalInfo2 = technicalInformationRepository.findAll().get(1);
+            TechnicalInformation technicalInfo3 = technicalInformationRepository.findAll().get(2);
+
+            Product product1 = new Product(
+                    "Terra di Puglia",
+                    "A delicate extra virgin olive oil from Puglia, with a balanced and fruity flavour.",
+                    "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5",
+                    ActiveStatus.ACTIVE,
+                    extraVirgin,
+                    technicalInfo1
+            );
+
+            Product product2 = new Product(
+                    "Verde di Toscana",
+                    "Organic extra virgin olive oil from Tuscany, with fresh herbal notes.",
+                    "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5",
+                    ActiveStatus.ACTIVE,
+                    organic,
+                    technicalInfo2
+            );
+
+            Product product3 = new Product(
+                    "Limone Italiano",
+                    "Extra virgin olive oil naturally flavoured with Italian lemon.",
+                    "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5",
+                    ActiveStatus.ACTIVE,
+                    flavoured,
+                    technicalInfo3
+            );
+
+            productRepository.saveAll(List.of(product1, product2, product3));
         }
 
     }
