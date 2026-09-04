@@ -1,7 +1,10 @@
 package valeriafarinosi.olive_bridge.services;
 
 import org.springframework.stereotype.Service;
+import valeriafarinosi.olive_bridge.entities.Order;
+import valeriafarinosi.olive_bridge.entities.OrderItem;
 import valeriafarinosi.olive_bridge.entities.ProductVariant;
+import valeriafarinosi.olive_bridge.enums.OrderStatus;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.CheckoutRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.OrderItemRequestDTO;
 import valeriafarinosi.olive_bridge.repositories.OrderItemRepository;
@@ -9,6 +12,7 @@ import valeriafarinosi.olive_bridge.repositories.OrderRepository;
 import valeriafarinosi.olive_bridge.repositories.ProductVariantRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Service
 public class OrderService {
@@ -25,7 +29,7 @@ public class OrderService {
         this.productVariantRepository = productVariantRepository;
     }
 
-    public void createOrder(CheckoutRequestDTO payload) {
+    public Order createOrder(CheckoutRequestDTO payload) {
 
         BigDecimal total = BigDecimal.ZERO;
 
@@ -40,7 +44,37 @@ public class OrderService {
             total = total.add(subtotal);
         }
 
-        System.out.println("Order total: " + total);
-    }
+        Order order = new Order(
+                null,
+                payload.customerEmail(),
+                LocalDateTime.now(),
+                total,
+                OrderStatus.PENDING,
+                payload.customerName(),
+                payload.shippingPostalCode(),
+                payload.shippingPrefecture(),
+                payload.shippingCity(),
+                payload.shippingArea(),
+                payload.shippingStreet(),
+                payload.shippingBuilding()
+        );
+        orderRepository.save(order);
 
+        for (OrderItemRequestDTO item : payload.items()) {
+
+            ProductVariant variant = productVariantRepository.findById(item.productVariantId())
+                    .orElseThrow(() -> new RuntimeException("Product variant not found."));
+
+            OrderItem orderItem = new OrderItem(
+                    item.quantity(),
+                    variant.getPrice(),
+                    order,
+                    variant
+            );
+
+            orderItemRepository.save(orderItem);
+        }
+
+        return order;
+    }
 }
