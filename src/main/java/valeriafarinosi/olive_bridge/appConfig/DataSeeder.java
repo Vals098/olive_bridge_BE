@@ -21,12 +21,13 @@ public class DataSeeder implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final TechnicalInformationRepository technicalInformationRepository;
     private final ProductRepository productRepository;
+    private final ProductVariantRepository productVariantRepository;
 
 
     public DataSeeder(
             RoleRepository roleRepository,
             UserRepository userRepository,
-            PasswordEncoder passwordEncoder, CategoryRepository categoryRepository, TechnicalInformationRepository technicalInformationRepository, ProductRepository productRepository
+            PasswordEncoder passwordEncoder, CategoryRepository categoryRepository, TechnicalInformationRepository technicalInformationRepository, ProductRepository productRepository, ProductVariantRepository productVariantRepository
     ) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
@@ -34,6 +35,7 @@ public class DataSeeder implements CommandLineRunner {
         this.categoryRepository = categoryRepository;
         this.technicalInformationRepository = technicalInformationRepository;
         this.productRepository = productRepository;
+        this.productVariantRepository = productVariantRepository;
     }
 
     @Override
@@ -174,7 +176,72 @@ public class DataSeeder implements CommandLineRunner {
             );
 
             productRepository.saveAll(List.of(product1, product2, product3));
+
+
+            // Populate product variants
+            if (productVariantRepository.count() == 0) {
+
+                ProductVariant variant1 = new ProductVariant(
+                        "250 ml",
+                        new BigDecimal("8.50"),
+                        null,
+                        ActiveStatus.ACTIVE,
+                        product1
+                );
+
+                ProductVariant variant2 = new ProductVariant(
+                        "500 ml",
+                        new BigDecimal("14.00"),
+                        null,
+                        ActiveStatus.ACTIVE,
+                        product1
+                );
+
+                ProductVariant variant3 = new ProductVariant(
+                        "250 ml",
+                        new BigDecimal("9.50"),
+                        null,
+                        ActiveStatus.ACTIVE,
+                        product2
+                );
+
+                ProductVariant variant4 = new ProductVariant(
+                        "500 ml",
+                        new BigDecimal("16.00"),
+                        null,
+                        ActiveStatus.ACTIVE,
+                        product2
+                );
+
+                ProductVariant variant5 = new ProductVariant(
+                        "250 ml",
+                        new BigDecimal("10.00"),
+                        null,
+                        ActiveStatus.ACTIVE,
+                        product3
+                );
+
+                ProductVariant variant6 = new ProductVariant(
+                        "500 ml",
+                        new BigDecimal("17.00"),
+                        null,
+                        ActiveStatus.ACTIVE,
+                        product3
+                );
+
+                productVariantRepository.saveAll(
+                        List.of(
+                                variant1,
+                                variant2,
+                                variant3,
+                                variant4,
+                                variant5,
+                                variant6
+                        )
+                );
+            }
         }
+
 
     }
 }
