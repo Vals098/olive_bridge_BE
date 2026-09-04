@@ -42,7 +42,7 @@ public class SecurityConfig {
         httpSecurity.cors(Customizer.withDefaults());
 
         httpSecurity.authorizeHttpRequests(req -> req
-                .requestMatchers("/auth/**", "/products/**").permitAll()
+                .requestMatchers("/auth/**", "/products/**", "/orders/checkout").permitAll()
                 .anyRequest().authenticated()
         );
 
