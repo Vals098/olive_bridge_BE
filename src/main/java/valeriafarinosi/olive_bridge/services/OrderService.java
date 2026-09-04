@@ -7,6 +7,7 @@ import valeriafarinosi.olive_bridge.entities.ProductVariant;
 import valeriafarinosi.olive_bridge.enums.OrderStatus;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.CheckoutRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.OrderItemRequestDTO;
+import valeriafarinosi.olive_bridge.payloads.responseDTOs.OrderResponseDTO;
 import valeriafarinosi.olive_bridge.repositories.OrderItemRepository;
 import valeriafarinosi.olive_bridge.repositories.OrderRepository;
 import valeriafarinosi.olive_bridge.repositories.ProductVariantRepository;
@@ -29,7 +30,7 @@ public class OrderService {
         this.productVariantRepository = productVariantRepository;
     }
 
-    public Order createOrder(CheckoutRequestDTO payload) {
+    public OrderResponseDTO createOrder(CheckoutRequestDTO payload) {
 
         BigDecimal total = BigDecimal.ZERO;
 
@@ -75,6 +76,19 @@ public class OrderService {
             orderItemRepository.save(orderItem);
         }
 
-        return order;
+        return new OrderResponseDTO(
+                order.getOrderId(),
+                order.getCustomerEmail(),
+                order.getOrderDate(),
+                order.getTotal(),
+                order.getStatus(),
+                order.getShippingRecipientName(),
+                order.getShippingPostalCode(),
+                order.getShippingPrefecture(),
+                order.getShippingCity(),
+                order.getShippingArea(),
+                order.getShippingStreet(),
+                order.getShippingBuilding()
+        );
     }
 }

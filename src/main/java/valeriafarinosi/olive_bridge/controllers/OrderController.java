@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import valeriafarinosi.olive_bridge.entities.Order;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.CheckoutRequestDTO;
+import valeriafarinosi.olive_bridge.payloads.responseDTOs.OrderResponseDTO;
 import valeriafarinosi.olive_bridge.services.OrderService;
 
 @RestController
@@ -19,7 +19,7 @@ public class OrderController {
     }
 
     @PostMapping("/checkout")
-    public Order createOrder(@RequestBody CheckoutRequestDTO payload) {
+    public OrderResponseDTO createOrder(@RequestBody CheckoutRequestDTO payload) {
         return orderService.createOrder(payload);
     }
 }
