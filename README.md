@@ -19,7 +19,7 @@ The frontend is developed separately with:
 - TypeScript
 - Vite
 - Bootstrap
-[Frontend Repository](LINK_TO_FRONTEND_REPO)
+[Frontend Repository](https://github.com/Vals098/olive_bridge_FE)
 
 ## API Documentation
 Coming soon.
