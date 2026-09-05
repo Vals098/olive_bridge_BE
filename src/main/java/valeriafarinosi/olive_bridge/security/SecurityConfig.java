@@ -43,7 +43,7 @@ public class SecurityConfig {
         );
 
         httpSecurity.authorizeHttpRequests(req -> req
-                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/auth/**", "/products/**", "/orders/checkout").permitAll()
                 .anyRequest().authenticated()
         );
 

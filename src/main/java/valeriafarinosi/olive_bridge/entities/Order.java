@@ -21,11 +21,14 @@ public class Order {
     @GeneratedValue
     private UUID orderId;
 
-    //    guest customers are not users but can place orders.
-//    user must be nullable
+    // Guest customers are not users but can place orders.
+    // User must be nullable.
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(nullable = false)
+    private String customerEmail;
 
     @Column(nullable = false)
     private LocalDateTime orderDate;
@@ -37,8 +40,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    //    customer may change address after making an order.
-//    old address data needed in the order history
+    // Customer may change address after making an order.
+    // Old address data is needed in the order history.
     @Column(nullable = false)
     private String shippingRecipientName;
 
@@ -61,6 +64,7 @@ public class Order {
 
     public Order(
             User user,
+            String customerEmail,
             LocalDateTime orderDate,
             BigDecimal total,
             OrderStatus status,
@@ -73,6 +77,7 @@ public class Order {
             String shippingBuilding
     ) {
         this.user = user;
+        this.customerEmail = customerEmail;
         this.orderDate = orderDate;
         this.total = total;
         this.status = status;
@@ -84,5 +89,4 @@ public class Order {
         this.shippingStreet = shippingStreet;
         this.shippingBuilding = shippingBuilding;
     }
-
 }
