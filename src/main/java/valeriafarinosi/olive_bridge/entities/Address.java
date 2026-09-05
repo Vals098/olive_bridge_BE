@@ -66,4 +66,24 @@ public class Address {
         this.street = street;
         this.building = building;
     }
+
+    public void update(
+            String label,
+            String recipientName,
+            String postalCode,
+            String prefecture,
+            String city,
+            String area,
+            String street,
+            String building
+    ) {
+        this.label = label;
+        this.recipientName = recipientName;
+        this.postalCode = postalCode;
+        this.prefecture = prefecture;
+        this.city = city;
+        this.area = area;
+        this.street = street;
+        this.building = building;
+    }
 }
