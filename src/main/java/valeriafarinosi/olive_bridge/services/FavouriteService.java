@@ -8,6 +8,7 @@ import valeriafarinosi.olive_bridge.entities.Product;
 import valeriafarinosi.olive_bridge.entities.User;
 import valeriafarinosi.olive_bridge.exceptions.BadRequestException;
 import valeriafarinosi.olive_bridge.exceptions.NotFoundException;
+import valeriafarinosi.olive_bridge.payloads.responseDTOs.FavouriteResponseDTO;
 import valeriafarinosi.olive_bridge.repositories.FavouriteRepository;
 import valeriafarinosi.olive_bridge.repositories.ProductRepository;
 
@@ -29,6 +30,7 @@ public class FavouriteService {
         this.productRepository = productRepository;
     }
 
+    //    USER from JWT
     private User getCurrentUser() {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
@@ -36,13 +38,18 @@ public class FavouriteService {
         return (User) authentication.getPrincipal();
     }
 
-    public List<Favourite> getMyFavourites() {
+    //    GET
+    public List<FavouriteResponseDTO> getMyFavourites() {
         User currentUser = getCurrentUser();
 
-        return favouriteRepository.findByUser(currentUser);
+        return favouriteRepository.findByUser(currentUser)
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
     }
 
-    public Favourite addFavourite(UUID productId) {
+    //     POST
+    public FavouriteResponseDTO addFavourite(UUID productId) {
         User currentUser = getCurrentUser();
 
         Product product = productRepository.findById(productId)
@@ -65,9 +72,12 @@ public class FavouriteService {
                 LocalDateTime.now()
         );
 
-        return favouriteRepository.save(favourite);
+        Favourite savedFavourite = favouriteRepository.save(favourite);
+
+        return toResponseDTO(savedFavourite);
     }
 
+    //    DELETE
     public void removeFavourite(UUID productId) {
         User currentUser = getCurrentUser();
 
@@ -83,5 +93,13 @@ public class FavouriteService {
                 );
 
         favouriteRepository.delete(favourite);
+    }
+
+    private FavouriteResponseDTO toResponseDTO(Favourite favourite) {
+        return new FavouriteResponseDTO(
+                favourite.getFavouriteId(),
+                favourite.getProduct().getProductId(),
+                favourite.getCreatedAt()
+        );
     }
 }

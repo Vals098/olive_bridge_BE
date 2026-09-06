@@ -2,7 +2,7 @@ package valeriafarinosi.olive_bridge.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import valeriafarinosi.olive_bridge.entities.Favourite;
+import valeriafarinosi.olive_bridge.payloads.responseDTOs.FavouriteResponseDTO;
 import valeriafarinosi.olive_bridge.services.FavouriteService;
 
 import java.util.List;
@@ -19,13 +19,13 @@ public class FavouriteController {
     }
 
     @GetMapping
-    public List<Favourite> getMyFavourites() {
+    public List<FavouriteResponseDTO> getMyFavourites() {
         return favouriteService.getMyFavourites();
     }
 
     @PostMapping("/{productId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Favourite addFavourite(@PathVariable UUID productId) {
+    public FavouriteResponseDTO addFavourite(@PathVariable UUID productId) {
         return favouriteService.addFavourite(productId);
     }
 
