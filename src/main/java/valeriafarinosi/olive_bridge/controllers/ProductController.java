@@ -29,4 +29,5 @@ public class ProductController {
     public Product findById(@PathVariable UUID productId) {
         return productService.findById(productId);
     }
+
 }

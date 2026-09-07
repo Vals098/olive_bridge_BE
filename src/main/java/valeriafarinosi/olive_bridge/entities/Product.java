@@ -37,11 +37,10 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(
             name = "technical_information_id",
-            nullable = false,
-            unique = true
+            nullable = false
     )
     private TechnicalInformation technicalInformation;
 
