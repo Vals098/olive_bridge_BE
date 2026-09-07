@@ -20,6 +20,12 @@ public class AdminProductController {
         this.productService = productService;
     }
 
+    @GetMapping("/{productId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Product getProductById(@PathVariable UUID productId) {
+        return productService.findById(productId);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -39,6 +45,7 @@ public class AdminProductController {
     }
 
     @DeleteMapping("/{productId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Product deleteProduct(@PathVariable UUID productId) {
         return productService.deleteProduct(productId);
     }
