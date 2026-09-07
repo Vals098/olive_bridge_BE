@@ -50,6 +50,13 @@ public class BusinessInquiryService {
                 .toList();
     }
 
+    public List<BusinessInquiryResponseDTO> getAllBusinessInquiries() {
+        return businessInquiryRepository.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
+    }
+
     public BusinessInquiryResponseDTO createInquiry(
             BusinessInquiryRequestDTO body
     ) {
