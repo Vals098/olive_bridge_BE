@@ -8,6 +8,8 @@ import valeriafarinosi.olive_bridge.entities.Product;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.ProductRequestDTO;
 import valeriafarinosi.olive_bridge.services.ProductService;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/admin/products")
 public class AdminProductController {
@@ -25,5 +27,14 @@ public class AdminProductController {
             @Valid @RequestBody ProductRequestDTO body
     ) {
         return productService.createProduct(body);
+    }
+
+    @PutMapping("/{productId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Product updateProduct(
+            @PathVariable UUID productId,
+            @Valid @RequestBody ProductRequestDTO body
+    ) {
+        return productService.updateProduct(productId, body);
     }
 }

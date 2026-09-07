@@ -53,5 +53,21 @@ public class Product {
         this.technicalInformation = technicalInformation;
     }
 
+    public void update(
+            String name,
+            String description,
+            String image,
+            ActiveStatus status,
+            Category category,
+            TechnicalInformation technicalInformation
+    ) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.status = status;
+        this.category = category;
+        this.technicalInformation = technicalInformation;
+    }
+
 
 }

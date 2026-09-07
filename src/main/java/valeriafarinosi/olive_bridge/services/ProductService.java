@@ -62,4 +62,37 @@ public class ProductService {
 
         return productRepository.save(product);
     }
+
+    public Product updateProduct(UUID productId, ProductRequestDTO body) {
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() ->
+                        new NotFoundException("Product not found.")
+                );
+
+        Category category = categoryRepository.findById(body.categoryId())
+                .orElseThrow(() ->
+                        new NotFoundException("Category not found.")
+                );
+
+        TechnicalInformation technicalInformation =
+                technicalInformationRepository
+                        .findById(body.technicalInformationId())
+                        .orElseThrow(() ->
+                                new NotFoundException(
+                                        "Technical information not found."
+                                )
+                        );
+
+        product.update(
+                body.name(),
+                body.description(),
+                body.image(),
+                body.status(),
+                category,
+                technicalInformation
+        );
+
+        return productRepository.save(product);
+    }
 }
