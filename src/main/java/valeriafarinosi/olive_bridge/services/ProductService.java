@@ -32,6 +32,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<Product> getActiveProducts() {
+        return productRepository.findByStatus(ActiveStatus.ACTIVE);
+    }
+
     public Product findById(UUID productId) {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found"));

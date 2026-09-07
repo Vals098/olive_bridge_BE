@@ -8,6 +8,7 @@ import valeriafarinosi.olive_bridge.entities.Product;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.ProductRequestDTO;
 import valeriafarinosi.olive_bridge.services.ProductService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -18,6 +19,12 @@ public class AdminProductController {
 
     public AdminProductController(ProductService productService) {
         this.productService = productService;
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
     }
 
     @GetMapping("/{productId}")
