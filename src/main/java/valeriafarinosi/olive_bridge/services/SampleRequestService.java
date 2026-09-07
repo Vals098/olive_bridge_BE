@@ -56,6 +56,13 @@ public class SampleRequestService {
                 .toList();
     }
 
+    public List<SampleRequestResponseDTO> getAllSampleRequests() {
+        return sampleRequestRepository.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
+    }
+
     public SampleRequestResponseDTO createSampleRequest(
             SampleRequestRequestDTO body
     ) {
