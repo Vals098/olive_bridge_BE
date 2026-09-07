@@ -8,6 +8,8 @@ import valeriafarinosi.olive_bridge.entities.Category;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.CategoryRequestDTO;
 import valeriafarinosi.olive_bridge.services.CategoryService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/categories")
 public class AdminCategoryController {
@@ -16,6 +18,12 @@ public class AdminCategoryController {
 
     public AdminCategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
     }
 
     @PostMapping

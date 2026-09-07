@@ -8,6 +8,8 @@ import valeriafarinosi.olive_bridge.entities.TechnicalInformation;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.TechnicalInformationRequestDTO;
 import valeriafarinosi.olive_bridge.services.TechnicalInformationService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/technical-information")
 public class AdminTechnicalInformationController {
@@ -18,6 +20,12 @@ public class AdminTechnicalInformationController {
             TechnicalInformationService technicalInformationService
     ) {
         this.technicalInformationService = technicalInformationService;
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<TechnicalInformation> getAllTechnicalInformations() {
+        return technicalInformationService.getAllTechnicalInformations();
     }
 
     @PostMapping
