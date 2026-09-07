@@ -69,5 +69,13 @@ public class Product {
         this.technicalInformation = technicalInformation;
     }
 
+    public void deactivate() {
+        this.status = ActiveStatus.INACTIVE;
+    }
+
+    public void activate() {
+        this.status = ActiveStatus.ACTIVE;
+    }
+
 
 }

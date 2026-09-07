@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import valeriafarinosi.olive_bridge.entities.Category;
 import valeriafarinosi.olive_bridge.entities.Product;
 import valeriafarinosi.olive_bridge.entities.TechnicalInformation;
+import valeriafarinosi.olive_bridge.enums.ActiveStatus;
+import valeriafarinosi.olive_bridge.exceptions.BadRequestException;
 import valeriafarinosi.olive_bridge.exceptions.NotFoundException;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.ProductRequestDTO;
 import valeriafarinosi.olive_bridge.repositories.CategoryRepository;
@@ -92,6 +94,32 @@ public class ProductService {
                 category,
                 technicalInformation
         );
+
+        return productRepository.save(product);
+    }
+
+    public Product deleteProduct(UUID productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product not found."));
+
+        if (product.getStatus() == ActiveStatus.INACTIVE) {
+            throw new BadRequestException("Product is already inactive.");
+        }
+
+        product.deactivate();
+
+        return productRepository.save(product);
+    }
+
+    public Product activateProduct(UUID productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product not found."));
+
+        if (product.getStatus() == ActiveStatus.ACTIVE) {
+            throw new BadRequestException("Product is already active.");
+        }
+
+        product.activate();
 
         return productRepository.save(product);
     }

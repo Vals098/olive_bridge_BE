@@ -37,4 +37,15 @@ public class AdminProductController {
     ) {
         return productService.updateProduct(productId, body);
     }
+
+    @DeleteMapping("/{productId}")
+    public Product deleteProduct(@PathVariable UUID productId) {
+        return productService.deleteProduct(productId);
+    }
+
+    @PatchMapping("/{productId}/activate")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Product activateProduct(@PathVariable UUID productId) {
+        return productService.activateProduct(productId);
+    }
 }
