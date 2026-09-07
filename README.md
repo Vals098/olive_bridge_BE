@@ -19,6 +19,8 @@ The platform supports both B2C and B2B interactions, including:
 - Product sample requests
 - Admin management
 
+---
+
 ## Tech Stack
 
 - Java
@@ -29,6 +31,8 @@ The platform supports both B2C and B2B interactions, including:
 - Spring Security
 - JWT
 - Lombok
+
+---
 
 ## Frontend
 
@@ -42,6 +46,8 @@ The frontend is developed separately with:
 - Bootstrap
 
 [OliveBridge Frontend Repository](https://github.com/Vals098/olive_bridge_FE)
+
+---
 
 ## API
 
@@ -62,6 +68,8 @@ The backend exposes REST API endpoints for:
 
 API endpoints are protected according to the user's authentication status and role.
 
+---
+
 ## Authentication and Authorization
 
 Authentication is implemented using JSON Web Tokens (JWT).
@@ -76,6 +84,8 @@ The application supports:
 The `ADMIN` and `BUYER` roles are used for authorization, while `INDIVIDUAL` and `BUSINESS` define the user's account type.
 
 Business-only operations are validated on the backend.
+
+---
 
 ## Database
 
@@ -97,6 +107,8 @@ The main entities include:
 - Sample Request
 - Business Inquiry
 
+---
+
 ## Installation
 
 Clone the repository:
@@ -104,6 +116,8 @@ Clone the repository:
 ```bash
 git clone https://github.com/Vals098/olive_bridge_BE.git
 ```
+
+---
 
 ## Environment Variables
 
@@ -117,11 +131,15 @@ Sensitive configuration files and credentials must not be committed to the repos
 
 Configure the required variables according to the local development environment before starting the application.
 
+---
+
 ## API Documentation
 
 API requests can be tested using tools such as Postman.
 
 The project does not currently include an automated API documentation interface such as Swagger/OpenAPI.
+
+---
 
 ## Frontend Integration
 
@@ -133,11 +151,15 @@ Frontend repository:
 
 [OliveBridge Frontend](https://github.com/Vals098/olive_bridge_FE.git)
 
+---
+
 ## Development
 
 The project was developed incrementally using Git feature branches and milestone releases.
 
 The `main` branch represents the stable version of the application, while new features were developed through dedicated feature branches.
+
+---
 
 ## Future Improvements
 
@@ -148,6 +170,18 @@ Possible future developments include:
 - Payment integration
 - Production deployment
 - Additional product management features
+
+---
+
+## Project
+
+**OliveBridge**
+
+Full Stack Web Development Capstone Project
+
+Frontend developed with React, TypeScript, Redux Toolkit and React Bootstrap.
+
+---
 
 ## Author
 
