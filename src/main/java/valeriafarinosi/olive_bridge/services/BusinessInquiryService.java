@@ -8,6 +8,7 @@ import valeriafarinosi.olive_bridge.entities.User;
 import valeriafarinosi.olive_bridge.enums.AccountType;
 import valeriafarinosi.olive_bridge.enums.BusinessInquiryStatus;
 import valeriafarinosi.olive_bridge.exceptions.BadRequestException;
+import valeriafarinosi.olive_bridge.payloads.requestDTOs.BusinessInquiryReplyRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.BusinessInquiryRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.responseDTOs.BusinessInquiryResponseDTO;
 import valeriafarinosi.olive_bridge.repositories.BusinessInquiryRepository;
