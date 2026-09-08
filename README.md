@@ -1,10 +1,18 @@
 # OliveBridge
 
-Backend for OliveBridge, a B2C & B2B e-commerce platform connecting an Italian extra virgin olive oil producer with the Japanese market.
+OliveBridge is a digital showcase and e-commerce platform for an Italian extra virgin olive oil producer from Puglia, with a focus on the Japanese market.
+
+🌿 **Live Demo:** https://olive-bridge.netlify.app
+
+🔗 **Backend API:** https://olivebridgebe-production.up.railway.app
+
+## Links
+
+- **Live Demo:** https://olive-bridge.netlify.app
+- **Frontend Repository:** https://github.com/VALS098/olive_bridge_FE
+- **Backend Repository:** https://github.com/VALS098/olive_bridge_BE
 
 ## About
-
-OliveBridge is a web platform designed to connect one Italian extra virgin olive oil producer with customers and business buyers in Japan.
 
 The platform supports both B2C and B2B interactions, including:
 
@@ -115,3 +123,74 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/Vals098/olive_bridge_BE.git
+```
+
+---
+
+## Environment Variables
+
+The application uses environment-specific configuration for sensitive information such as:
+
+- Database credentials
+- JWT configuration
+- External service credentials
+
+Sensitive configuration files and credentials must not be committed to the repository.
+
+Configure the required variables according to the local development environment before starting the application.
+
+---
+
+## API Documentation
+
+API requests can be tested using tools such as Postman.
+
+The project does not currently include an automated API documentation interface such as Swagger/OpenAPI.
+
+---
+
+## Frontend Integration
+
+The backend is designed to work with the OliveBridge React frontend.
+
+The frontend communicates with the backend through REST API requests.
+
+Frontend repository:
+
+[OliveBridge Frontend](https://github.com/Vals098/olive_bridge_FE.git)
+
+---
+
+## Development
+
+The project was developed incrementally using Git feature branches and milestone releases.
+
+The `main` branch represents the stable version of the application, while new features were developed through dedicated feature branches.
+
+---
+
+## Future Improvements
+
+Possible future developments include:
+
+- API documentation with Swagger/OpenAPI
+- Email notifications
+- Payment integration
+- Production deployment
+- Additional product management features
+
+---
+
+## Project
+
+**OliveBridge**
+
+Full Stack Web Development Capstone Project
+
+Frontend developed with React, TypeScript, Redux Toolkit and React Bootstrap.
+
+---
+
+## Author
+
+Valeria Farinosi
