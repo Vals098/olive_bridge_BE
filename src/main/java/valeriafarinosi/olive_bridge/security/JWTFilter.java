@@ -15,7 +15,6 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import valeriafarinosi.olive_bridge.entities.User;
-import valeriafarinosi.olive_bridge.exceptions.UnauthorizedException;
 import valeriafarinosi.olive_bridge.services.UserService;
 
 import java.io.IOException;
@@ -45,10 +44,10 @@ public class JWTFilter extends OncePerRequestFilter {
         try {
             String authHeader = request.getHeader("Authorization");
 
+            // No token → continue as guest
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                throw new UnauthorizedException(
-                        "Please include the token in the Authorization header using the Bearer format."
-                );
+                filterChain.doFilter(request, response);
+                return;
             }
 
             String accessToken = authHeader.substring(7);
@@ -90,7 +89,6 @@ public class JWTFilter extends OncePerRequestFilter {
         AntPathMatcher matcher = new AntPathMatcher();
 
         return matcher.match("/auth/**", path)
-                || matcher.match("/products/**", path)
-                || matcher.match("/orders/checkout", path);
+                || matcher.match("/products/**", path);
     }
 }
