@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import valeriafarinosi.olive_bridge.enums.OrderStatus;
+import valeriafarinosi.olive_bridge.enums.PaymentMethod;
+import valeriafarinosi.olive_bridge.enums.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -39,6 +41,18 @@ public class Order {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
+
+    // Will be used if Stripe is implemented in the future.
+    // Nullable for now because we are not using Stripe yet.
+    private String stripePaymentId;
 
     // Customer may change address after making an order.
     // Old address data is needed in the order history.
@@ -85,6 +99,8 @@ public class Order {
             LocalDateTime orderDate,
             BigDecimal total,
             OrderStatus status,
+            PaymentMethod paymentMethod,
+            PaymentStatus paymentStatus,
 
             // SHIPPING
             String shippingRecipientName,
@@ -108,6 +124,8 @@ public class Order {
         this.orderDate = orderDate;
         this.total = total;
         this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
 
         this.shippingRecipientName = shippingRecipientName;
         this.shippingPostalCode = shippingPostalCode;

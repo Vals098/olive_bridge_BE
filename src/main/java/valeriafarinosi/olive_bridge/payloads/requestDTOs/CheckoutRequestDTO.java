@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import valeriafarinosi.olive_bridge.enums.PaymentMethod;
 
 import java.util.List;
 
@@ -51,6 +53,10 @@ public record CheckoutRequestDTO(
         String billingStreet,
 
         String billingBuilding,
+
+        // PAYMENT
+        @NotNull(message = "Payment method is required.")
+        PaymentMethod paymentMethod,
 
         @NotEmpty(message = "The order must contain at least one item.")
         @Valid

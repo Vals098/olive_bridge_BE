@@ -6,6 +6,7 @@ import valeriafarinosi.olive_bridge.entities.OrderItem;
 import valeriafarinosi.olive_bridge.entities.ProductVariant;
 import valeriafarinosi.olive_bridge.entities.User;
 import valeriafarinosi.olive_bridge.enums.OrderStatus;
+import valeriafarinosi.olive_bridge.enums.PaymentStatus;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.CheckoutRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.OrderItemRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.responseDTOs.OrderResponseDTO;
@@ -24,9 +25,11 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final ProductVariantRepository productVariantRepository;
 
-    public OrderService(OrderRepository orderRepository,
-                        OrderItemRepository orderItemRepository,
-                        ProductVariantRepository productVariantRepository) {
+    public OrderService(
+            OrderRepository orderRepository,
+            OrderItemRepository orderItemRepository,
+            ProductVariantRepository productVariantRepository
+    ) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.productVariantRepository = productVariantRepository;
@@ -41,8 +44,11 @@ public class OrderService {
 
         for (OrderItemRequestDTO item : payload.items()) {
 
-            ProductVariant variant = productVariantRepository.findById(item.productVariantId())
-                    .orElseThrow(() -> new RuntimeException("Product variant not found."));
+            ProductVariant variant = productVariantRepository.findById(
+                    item.productVariantId()
+            ).orElseThrow(() ->
+                    new RuntimeException("Product variant not found.")
+            );
 
             BigDecimal subtotal = variant.getPrice()
                     .multiply(BigDecimal.valueOf(item.quantity()));
@@ -56,6 +62,10 @@ public class OrderService {
                 LocalDateTime.now(),
                 total,
                 OrderStatus.PENDING,
+
+                // PAYMENT
+                payload.paymentMethod(),
+                PaymentStatus.PAID,
 
                 // SHIPPING
                 payload.customerName(),
@@ -79,8 +89,11 @@ public class OrderService {
 
         for (OrderItemRequestDTO item : payload.items()) {
 
-            ProductVariant variant = productVariantRepository.findById(item.productVariantId())
-                    .orElseThrow(() -> new RuntimeException("Product variant not found."));
+            ProductVariant variant = productVariantRepository.findById(
+                    item.productVariantId()
+            ).orElseThrow(() ->
+                    new RuntimeException("Product variant not found.")
+            );
 
             OrderItem orderItem = new OrderItem(
                     item.quantity(),
@@ -98,6 +111,10 @@ public class OrderService {
                 order.getOrderDate(),
                 order.getTotal(),
                 order.getStatus(),
+
+                // PAYMENT
+                order.getPaymentMethod(),
+                order.getPaymentStatus(),
 
                 // SHIPPING
                 order.getShippingRecipientName(),
@@ -130,6 +147,10 @@ public class OrderService {
                         order.getTotal(),
                         order.getStatus(),
 
+                        // PAYMENT
+                        order.getPaymentMethod(),
+                        order.getPaymentStatus(),
+
                         // SHIPPING
                         order.getShippingRecipientName(),
                         order.getShippingPostalCode(),
@@ -161,6 +182,10 @@ public class OrderService {
                         order.getOrderDate(),
                         order.getTotal(),
                         order.getStatus(),
+
+                        // PAYMENT
+                        order.getPaymentMethod(),
+                        order.getPaymentStatus(),
 
                         // SHIPPING
                         order.getShippingRecipientName(),

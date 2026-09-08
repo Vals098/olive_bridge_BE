@@ -1,6 +1,8 @@
 package valeriafarinosi.olive_bridge.payloads.responseDTOs;
 
 import valeriafarinosi.olive_bridge.enums.OrderStatus;
+import valeriafarinosi.olive_bridge.enums.PaymentMethod;
+import valeriafarinosi.olive_bridge.enums.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,6 +14,10 @@ public record OrderResponseDTO(
         LocalDateTime orderDate,
         BigDecimal total,
         OrderStatus status,
+
+        // PAYMENT
+        PaymentMethod paymentMethod,
+        PaymentStatus paymentStatus,
 
         // SHIPPING
         String shippingRecipientName,
