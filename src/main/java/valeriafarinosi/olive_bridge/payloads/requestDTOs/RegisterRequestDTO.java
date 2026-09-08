@@ -23,7 +23,11 @@ public record RegisterRequestDTO(
         String password,
 
         @NotNull(message = "Account type is required.")
-        AccountType accountType
+        AccountType accountType,
+
+        String businessName,
+
+        String businessTaxId
 
 ) {
 }

@@ -40,6 +40,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
+    // Only for BUSINESS accounts
+    private String businessName;
+
+    private String businessTaxId;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ActiveStatus status;
@@ -51,6 +56,8 @@ public class User {
             String password,
             Role role,
             AccountType accountType,
+            String businessName,
+            String businessTaxId,
             ActiveStatus status
     ) {
         this.name = name;
@@ -59,6 +66,8 @@ public class User {
         this.password = password;
         this.role = role;
         this.accountType = accountType;
+        this.businessName = businessName;
+        this.businessTaxId = businessTaxId;
         this.status = status;
     }
 }

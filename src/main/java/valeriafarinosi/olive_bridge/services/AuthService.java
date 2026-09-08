@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import valeriafarinosi.olive_bridge.entities.Role;
 import valeriafarinosi.olive_bridge.entities.User;
+import valeriafarinosi.olive_bridge.enums.AccountType;
 import valeriafarinosi.olive_bridge.enums.ActiveStatus;
 import valeriafarinosi.olive_bridge.exceptions.BadRequestException;
 import valeriafarinosi.olive_bridge.exceptions.UnauthorizedException;
@@ -50,6 +51,17 @@ public class AuthService {
             throw new BadRequestException("Email already registered");
         }
 
+        if (body.accountType() == AccountType.BUSINESS) {
+
+            if (body.businessName() == null || body.businessName().isBlank()) {
+                throw new BadRequestException("Business name is required.");
+            }
+
+            if (body.businessTaxId() == null || body.businessTaxId().isBlank()) {
+                throw new BadRequestException("Business tax ID is required.");
+            }
+        }
+
         Role buyerRole = roleRepository.findByName("BUYER")
                 .orElseThrow(() ->
                         new RuntimeException("BUYER role not found")
@@ -62,6 +74,8 @@ public class AuthService {
                 passwordEncoder.encode(body.password()),
                 buyerRole,
                 body.accountType(),
+                body.businessName(),
+                body.businessTaxId(),
                 ActiveStatus.ACTIVE
         );
 
