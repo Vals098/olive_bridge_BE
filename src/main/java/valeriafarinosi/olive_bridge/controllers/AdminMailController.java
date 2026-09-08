@@ -5,8 +5,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.BusinessInquiryReplyRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.SampleRequestReplyRequestDTO;
-import valeriafarinosi.olive_bridge.payloads.responseDTOs.BusinessInquiryResponseDTO;
-import valeriafarinosi.olive_bridge.payloads.responseDTOs.SampleRequestResponseDTO;
 import valeriafarinosi.olive_bridge.services.BusinessInquiryService;
 import valeriafarinosi.olive_bridge.services.SampleRequestService;
 
@@ -29,11 +27,11 @@ public class AdminMailController {
 
     @PostMapping("/sample-request/{sampleRequestId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public SampleRequestResponseDTO replyToSampleRequest(
+    public void replyToSampleRequest(
             @PathVariable UUID sampleRequestId,
             @Valid @RequestBody SampleRequestReplyRequestDTO body
     ) {
-        return sampleRequestService.replyToSampleRequest(
+        sampleRequestService.replyToSampleRequest(
                 sampleRequestId,
                 body
         );
@@ -41,11 +39,11 @@ public class AdminMailController {
 
     @PostMapping("/business-inquiry/{businessInquiryId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public BusinessInquiryResponseDTO replyToBusinessInquiry(
+    public void replyToBusinessInquiry(
             @PathVariable UUID businessInquiryId,
             @Valid @RequestBody BusinessInquiryReplyRequestDTO body
     ) {
-        return businessInquiryService.replyToInquiry(
+        businessInquiryService.replyToInquiry(
                 businessInquiryId,
                 body
         );

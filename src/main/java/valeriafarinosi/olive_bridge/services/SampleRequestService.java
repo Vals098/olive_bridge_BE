@@ -12,6 +12,7 @@ import valeriafarinosi.olive_bridge.exceptions.BadRequestException;
 import valeriafarinosi.olive_bridge.exceptions.NotFoundException;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.SampleRequestReplyRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.SampleRequestRequestDTO;
+import valeriafarinosi.olive_bridge.payloads.requestDTOs.SampleRequestStatusRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.responseDTOs.SampleRequestResponseDTO;
 import valeriafarinosi.olive_bridge.repositories.ProductRepository;
 import valeriafarinosi.olive_bridge.repositories.SampleRequestRepository;
@@ -101,10 +102,11 @@ public class SampleRequestService {
         return toResponseDTO(savedSampleRequest);
     }
 
-    public SampleRequestResponseDTO replyToSampleRequest(
+    public void replyToSampleRequest(
             UUID sampleRequestId,
             SampleRequestReplyRequestDTO body
     ) {
+
         SampleRequest sampleRequest =
                 sampleRequestRepository.findById(sampleRequestId)
                         .orElseThrow(() ->
@@ -119,13 +121,6 @@ public class SampleRequestService {
                 user.getEmail(),
                 body.message()
         );
-
-        sampleRequest.setStatus(SampleRequestStatus.APPROVED);
-
-        SampleRequest updatedSampleRequest =
-                sampleRequestRepository.save(sampleRequest);
-
-        return toResponseDTO(updatedSampleRequest);
     }
 
     private SampleRequestResponseDTO toResponseDTO(
@@ -145,5 +140,49 @@ public class SampleRequestService {
                 sampleRequest.getStreet(),
                 sampleRequest.getBuilding()
         );
+    }
+
+    public SampleRequestResponseDTO updateStatus(
+            UUID sampleRequestId,
+            SampleRequestStatusRequestDTO body
+    ) {
+
+        SampleRequest sampleRequest =
+                sampleRequestRepository.findById(sampleRequestId)
+                        .orElseThrow(() ->
+                                new NotFoundException(
+                                        "Sample request not found."
+                                )
+                        );
+
+        SampleRequestStatus currentStatus =
+                sampleRequest.getStatus();
+
+        SampleRequestStatus newStatus =
+                body.status();
+
+        boolean validTransition =
+                (currentStatus == SampleRequestStatus.PENDING
+                        && (newStatus == SampleRequestStatus.APPROVED
+                        || newStatus == SampleRequestStatus.REJECTED))
+                        ||
+                        (currentStatus == SampleRequestStatus.APPROVED
+                                && newStatus == SampleRequestStatus.SHIPPED)
+                        ||
+                        (currentStatus == SampleRequestStatus.SHIPPED
+                                && newStatus == SampleRequestStatus.COMPLETED);
+
+        if (!validTransition) {
+            throw new BadRequestException(
+                    "Invalid status transition."
+            );
+        }
+
+        sampleRequest.setStatus(newStatus);
+
+        SampleRequest updatedSampleRequest =
+                sampleRequestRepository.save(sampleRequest);
+
+        return toResponseDTO(updatedSampleRequest);
     }
 }
