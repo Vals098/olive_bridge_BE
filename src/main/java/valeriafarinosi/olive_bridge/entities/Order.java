@@ -62,25 +62,53 @@ public class Order {
 
     private String shippingBuilding;
 
+    @Column(nullable = false)
+    private String billingPostalCode;
+
+    @Column(nullable = false)
+    private String billingPrefecture;
+
+    @Column(nullable = false)
+    private String billingCity;
+
+    @Column(nullable = false)
+    private String billingArea;
+
+    @Column(nullable = false)
+    private String billingStreet;
+
+    private String billingBuilding;
+
     public Order(
             User user,
             String customerEmail,
             LocalDateTime orderDate,
             BigDecimal total,
             OrderStatus status,
+
+            // SHIPPING
             String shippingRecipientName,
             String shippingPostalCode,
             String shippingPrefecture,
             String shippingCity,
             String shippingArea,
             String shippingStreet,
-            String shippingBuilding
+            String shippingBuilding,
+
+            // BILLING
+            String billingPostalCode,
+            String billingPrefecture,
+            String billingCity,
+            String billingArea,
+            String billingStreet,
+            String billingBuilding
     ) {
         this.user = user;
         this.customerEmail = customerEmail;
         this.orderDate = orderDate;
         this.total = total;
         this.status = status;
+
         this.shippingRecipientName = shippingRecipientName;
         this.shippingPostalCode = shippingPostalCode;
         this.shippingPrefecture = shippingPrefecture;
@@ -88,5 +116,12 @@ public class Order {
         this.shippingArea = shippingArea;
         this.shippingStreet = shippingStreet;
         this.shippingBuilding = shippingBuilding;
+
+        this.billingPostalCode = billingPostalCode;
+        this.billingPrefecture = billingPrefecture;
+        this.billingCity = billingCity;
+        this.billingArea = billingArea;
+        this.billingStreet = billingStreet;
+        this.billingBuilding = billingBuilding;
     }
 }

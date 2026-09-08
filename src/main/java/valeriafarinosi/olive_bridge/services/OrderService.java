@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import valeriafarinosi.olive_bridge.entities.Order;
 import valeriafarinosi.olive_bridge.entities.OrderItem;
 import valeriafarinosi.olive_bridge.entities.ProductVariant;
+import valeriafarinosi.olive_bridge.entities.User;
 import valeriafarinosi.olive_bridge.enums.OrderStatus;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.CheckoutRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.OrderItemRequestDTO;
@@ -30,7 +31,10 @@ public class OrderService {
         this.productVariantRepository = productVariantRepository;
     }
 
-    public OrderResponseDTO createOrder(CheckoutRequestDTO payload) {
+    public OrderResponseDTO createOrder(
+            CheckoutRequestDTO payload,
+            User currentUser
+    ) {
 
         BigDecimal total = BigDecimal.ZERO;
 
@@ -46,19 +50,30 @@ public class OrderService {
         }
 
         Order order = new Order(
-                null,
+                currentUser,
                 payload.customerEmail(),
                 LocalDateTime.now(),
                 total,
                 OrderStatus.PENDING,
+
+                // SHIPPING
                 payload.customerName(),
                 payload.shippingPostalCode(),
                 payload.shippingPrefecture(),
                 payload.shippingCity(),
                 payload.shippingArea(),
                 payload.shippingStreet(),
-                payload.shippingBuilding()
+                payload.shippingBuilding(),
+
+                // BILLING
+                payload.billingPostalCode(),
+                payload.billingPrefecture(),
+                payload.billingCity(),
+                payload.billingArea(),
+                payload.billingStreet(),
+                payload.billingBuilding()
         );
+
         orderRepository.save(order);
 
         for (OrderItemRequestDTO item : payload.items()) {
@@ -82,13 +97,23 @@ public class OrderService {
                 order.getOrderDate(),
                 order.getTotal(),
                 order.getStatus(),
+
+                // SHIPPING
                 order.getShippingRecipientName(),
                 order.getShippingPostalCode(),
                 order.getShippingPrefecture(),
                 order.getShippingCity(),
                 order.getShippingArea(),
                 order.getShippingStreet(),
-                order.getShippingBuilding()
+                order.getShippingBuilding(),
+
+                // BILLING
+                order.getBillingPostalCode(),
+                order.getBillingPrefecture(),
+                order.getBillingCity(),
+                order.getBillingArea(),
+                order.getBillingStreet(),
+                order.getBillingBuilding()
         );
     }
 }

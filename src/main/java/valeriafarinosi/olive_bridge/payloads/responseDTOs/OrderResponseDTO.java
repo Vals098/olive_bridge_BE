@@ -12,12 +12,22 @@ public record OrderResponseDTO(
         LocalDateTime orderDate,
         BigDecimal total,
         OrderStatus status,
+
+        // SHIPPING
         String shippingRecipientName,
         String shippingPostalCode,
         String shippingPrefecture,
         String shippingCity,
         String shippingArea,
         String shippingStreet,
-        String shippingBuilding
+        String shippingBuilding,
+
+        // BILLING
+        String billingPostalCode,
+        String billingPrefecture,
+        String billingCity,
+        String billingArea,
+        String billingStreet,
+        String billingBuilding
 ) {
 }
