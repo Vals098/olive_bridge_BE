@@ -15,6 +15,7 @@ import valeriafarinosi.olive_bridge.repositories.ProductVariantRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class OrderService {
@@ -115,5 +116,69 @@ public class OrderService {
                 order.getBillingStreet(),
                 order.getBillingBuilding()
         );
+    }
+
+    public List<OrderResponseDTO> getOrdersByUser(User currentUser) {
+
+        return orderRepository
+                .findByUserOrderByOrderDateDesc(currentUser)
+                .stream()
+                .map(order -> new OrderResponseDTO(
+                        order.getOrderId(),
+                        order.getCustomerEmail(),
+                        order.getOrderDate(),
+                        order.getTotal(),
+                        order.getStatus(),
+
+                        // SHIPPING
+                        order.getShippingRecipientName(),
+                        order.getShippingPostalCode(),
+                        order.getShippingPrefecture(),
+                        order.getShippingCity(),
+                        order.getShippingArea(),
+                        order.getShippingStreet(),
+                        order.getShippingBuilding(),
+
+                        // BILLING
+                        order.getBillingPostalCode(),
+                        order.getBillingPrefecture(),
+                        order.getBillingCity(),
+                        order.getBillingArea(),
+                        order.getBillingStreet(),
+                        order.getBillingBuilding()
+                ))
+                .toList();
+    }
+
+    public List<OrderResponseDTO> getAllOrders() {
+
+        return orderRepository
+                .findAll()
+                .stream()
+                .map(order -> new OrderResponseDTO(
+                        order.getOrderId(),
+                        order.getCustomerEmail(),
+                        order.getOrderDate(),
+                        order.getTotal(),
+                        order.getStatus(),
+
+                        // SHIPPING
+                        order.getShippingRecipientName(),
+                        order.getShippingPostalCode(),
+                        order.getShippingPrefecture(),
+                        order.getShippingCity(),
+                        order.getShippingArea(),
+                        order.getShippingStreet(),
+                        order.getShippingBuilding(),
+
+                        // BILLING
+                        order.getBillingPostalCode(),
+                        order.getBillingPrefecture(),
+                        order.getBillingCity(),
+                        order.getBillingArea(),
+                        order.getBillingStreet(),
+                        order.getBillingBuilding()
+                ))
+                .toList();
     }
 }

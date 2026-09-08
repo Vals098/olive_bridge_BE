@@ -62,7 +62,9 @@ public class JWTFilter extends OncePerRequestFilter {
 
             // 3. Map the user's role to Spring Security's GrantedAuthority
             List<SimpleGrantedAuthority> authorities = List.of(
-                    new SimpleGrantedAuthority(currentUser.getRole().getName())
+                    new SimpleGrantedAuthority(
+                            "ROLE_" + currentUser.getRole().getName()
+                    )
             );
 
             // 4. Create the authentication object

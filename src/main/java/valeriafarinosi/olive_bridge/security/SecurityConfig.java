@@ -44,6 +44,7 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests(req -> req
                 .requestMatchers("/auth/**", "/products/**", "/orders/checkout").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
         );
 
