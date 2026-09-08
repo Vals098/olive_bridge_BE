@@ -24,15 +24,17 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final ProductVariantRepository productVariantRepository;
+    private final MailgunService mailgunService;
 
     public OrderService(
             OrderRepository orderRepository,
             OrderItemRepository orderItemRepository,
-            ProductVariantRepository productVariantRepository
+            ProductVariantRepository productVariantRepository, MailgunService mailgunService
     ) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.productVariantRepository = productVariantRepository;
+        this.mailgunService = mailgunService;
     }
 
     public OrderResponseDTO createOrder(
@@ -104,6 +106,12 @@ public class OrderService {
 
             orderItemRepository.save(orderItem);
         }
+
+        mailgunService.sendOrderConfirmation(
+                order.getCustomerEmail(),
+                order.getOrderId().toString(),
+                order.getTotal().toString()
+        );
 
         return new OrderResponseDTO(
                 order.getOrderId(),

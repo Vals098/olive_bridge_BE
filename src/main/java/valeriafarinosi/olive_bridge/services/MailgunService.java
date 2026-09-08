@@ -37,4 +37,45 @@ public class MailgunService {
 
         mailgunMessagesApi.sendMessage(domain, message);
     }
+
+    public void sendSampleRequestReply(
+            String to,
+            String reply
+    ) {
+
+        sendEmail(
+                to,
+                "OliveBridge — Sample Request",
+                reply
+        );
+    }
+
+    public void sendBusinessInquiryReply(
+            String to,
+            String reply
+    ) {
+
+        sendEmail(
+                to,
+                "OliveBridge — Business Inquiry",
+                reply
+        );
+    }
+
+    public void sendOrderConfirmation(
+            String to,
+            String orderId,
+            String total
+    ) {
+
+        sendEmail(
+                to,
+                "OliveBridge — Order Confirmation",
+                "Thank you for your order!\n\n"
+                        + "Order: #" + orderId + "\n"
+                        + "Total: €" + total + "\n\n"
+                        + "We will keep you updated on the status of your order.\n\n"
+                        + "OliveBridge"
+        );
+    }
 }

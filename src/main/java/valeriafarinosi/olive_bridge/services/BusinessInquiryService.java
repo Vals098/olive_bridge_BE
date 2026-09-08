@@ -7,23 +7,27 @@ import valeriafarinosi.olive_bridge.entities.BusinessInquiry;
 import valeriafarinosi.olive_bridge.entities.User;
 import valeriafarinosi.olive_bridge.enums.AccountType;
 import valeriafarinosi.olive_bridge.enums.BusinessInquiryStatus;
-import valeriafarinosi.olive_bridge.exceptions.BadRequestException;
+import valeriafarinosi.olive_bridge.payloads.requestDTOs.BusinessInquiryReplyRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.BusinessInquiryRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.responseDTOs.BusinessInquiryResponseDTO;
 import valeriafarinosi.olive_bridge.repositories.BusinessInquiryRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class BusinessInquiryService {
 
     private final BusinessInquiryRepository businessInquiryRepository;
+    private final MailgunService mailgunService;
 
     public BusinessInquiryService(
-            BusinessInquiryRepository businessInquiryRepository
+            BusinessInquiryRepository businessInquiryRepository,
+            MailgunService mailgunService
     ) {
         this.businessInquiryRepository = businessInquiryRepository;
+        this.mailgunService = mailgunService;
     }
 
     private User getCurrentUser() {
@@ -76,6 +80,34 @@ public class BusinessInquiryService {
                 businessInquiryRepository.save(inquiry);
 
         return toResponseDTO(savedInquiry);
+    }
+
+    public BusinessInquiryResponseDTO replyToInquiry(
+            UUID businessInquiryId,
+            BusinessInquiryReplyRequestDTO body
+    ) {
+
+        BusinessInquiry inquiry =
+                businessInquiryRepository.findById(businessInquiryId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Business inquiry not found."
+                                )
+                        );
+
+        User user = inquiry.getUser();
+
+        mailgunService.sendBusinessInquiryReply(
+                user.getEmail(),
+                body.message()
+        );
+
+        inquiry.setStatus(BusinessInquiryStatus.IN_PROGRESS);
+
+        BusinessInquiry updatedInquiry =
+                businessInquiryRepository.save(inquiry);
+
+        return toResponseDTO(updatedInquiry);
     }
 
     private BusinessInquiryResponseDTO toResponseDTO(

@@ -87,5 +87,9 @@ public class SampleRequest {
         this.street = street;
         this.building = building;
     }
+
+    public void setStatus(SampleRequestStatus status) {
+        this.status = status;
+    }
 }
 

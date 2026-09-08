@@ -10,6 +10,7 @@ import valeriafarinosi.olive_bridge.enums.AccountType;
 import valeriafarinosi.olive_bridge.enums.SampleRequestStatus;
 import valeriafarinosi.olive_bridge.exceptions.BadRequestException;
 import valeriafarinosi.olive_bridge.exceptions.NotFoundException;
+import valeriafarinosi.olive_bridge.payloads.requestDTOs.SampleRequestReplyRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.requestDTOs.SampleRequestRequestDTO;
 import valeriafarinosi.olive_bridge.payloads.responseDTOs.SampleRequestResponseDTO;
 import valeriafarinosi.olive_bridge.repositories.ProductRepository;
@@ -17,19 +18,23 @@ import valeriafarinosi.olive_bridge.repositories.SampleRequestRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SampleRequestService {
 
     private final SampleRequestRepository sampleRequestRepository;
     private final ProductRepository productRepository;
+    private final MailgunService mailgunService;
 
     public SampleRequestService(
             SampleRequestRepository sampleRequestRepository,
-            ProductRepository productRepository
+            ProductRepository productRepository,
+            MailgunService mailgunService
     ) {
         this.sampleRequestRepository = sampleRequestRepository;
         this.productRepository = productRepository;
+        this.mailgunService = mailgunService;
     }
 
     private User getCurrentUser() {
@@ -94,6 +99,33 @@ public class SampleRequestService {
                 sampleRequestRepository.save(sampleRequest);
 
         return toResponseDTO(savedSampleRequest);
+    }
+
+    public SampleRequestResponseDTO replyToSampleRequest(
+            UUID sampleRequestId,
+            SampleRequestReplyRequestDTO body
+    ) {
+        SampleRequest sampleRequest =
+                sampleRequestRepository.findById(sampleRequestId)
+                        .orElseThrow(() ->
+                                new NotFoundException(
+                                        "Sample request not found."
+                                )
+                        );
+
+        User user = sampleRequest.getUser();
+
+        mailgunService.sendSampleRequestReply(
+                user.getEmail(),
+                body.message()
+        );
+
+        sampleRequest.setStatus(SampleRequestStatus.APPROVED);
+
+        SampleRequest updatedSampleRequest =
+                sampleRequestRepository.save(sampleRequest);
+
+        return toResponseDTO(updatedSampleRequest);
     }
 
     private SampleRequestResponseDTO toResponseDTO(
