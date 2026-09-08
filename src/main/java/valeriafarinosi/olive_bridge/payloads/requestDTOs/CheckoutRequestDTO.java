@@ -16,27 +16,25 @@ public record CheckoutRequestDTO(
         @Email(message = "Customer email must be valid.")
         String customerEmail,
 
-        // SHIPPING
-
-        @NotBlank(message = "Postal code is required.")
+        // SHIPPING ADDRESS
+        @NotBlank(message = "Shipping postal code is required.")
         String shippingPostalCode,
 
-        @NotBlank(message = "Prefecture is required.")
+        @NotBlank(message = "Shipping prefecture is required.")
         String shippingPrefecture,
 
-        @NotBlank(message = "City is required.")
+        @NotBlank(message = "Shipping city is required.")
         String shippingCity,
 
-        @NotBlank(message = "Area is required.")
+        @NotBlank(message = "Shipping area is required.")
         String shippingArea,
 
-        @NotBlank(message = "Street is required.")
+        @NotBlank(message = "Shipping street is required.")
         String shippingStreet,
 
         String shippingBuilding,
 
-        // BILLING
-
+        // BILLING ADDRESS
         @NotBlank(message = "Billing postal code is required.")
         String billingPostalCode,
 
