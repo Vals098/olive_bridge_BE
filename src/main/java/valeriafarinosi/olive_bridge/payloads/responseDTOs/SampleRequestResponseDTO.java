@@ -10,6 +10,15 @@ public record SampleRequestResponseDTO(
         UUID productId,
         String message,
         SampleRequestStatus status,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+
+        // SHIPPING ADDRESS
+        String recipientName,
+        String postalCode,
+        String prefecture,
+        String city,
+        String area,
+        String street,
+        String building
 ) {
 }

@@ -80,7 +80,14 @@ public class SampleRequestService {
                 product,
                 body.message(),
                 SampleRequestStatus.PENDING,
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                body.recipientName(),
+                body.postalCode(),
+                body.prefecture(),
+                body.city(),
+                body.area(),
+                body.street(),
+                body.building()
         );
 
         SampleRequest savedSampleRequest =
@@ -97,7 +104,14 @@ public class SampleRequestService {
                 sampleRequest.getProduct().getProductId(),
                 sampleRequest.getMessage(),
                 sampleRequest.getStatus(),
-                sampleRequest.getCreatedAt()
+                sampleRequest.getCreatedAt(),
+                sampleRequest.getRecipientName(),
+                sampleRequest.getPostalCode(),
+                sampleRequest.getPrefecture(),
+                sampleRequest.getCity(),
+                sampleRequest.getArea(),
+                sampleRequest.getStreet(),
+                sampleRequest.getBuilding()
         );
     }
 }
