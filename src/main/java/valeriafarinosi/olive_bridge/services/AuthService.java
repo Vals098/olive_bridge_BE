@@ -51,6 +51,11 @@ public class AuthService {
             throw new BadRequestException("Email already registered");
         }
 
+        if (body.accountType() == AccountType.BUSINESS
+                && userRepository.findByBusinessTaxId(body.businessTaxId()).isPresent()) {
+            throw new BadRequestException("Business tax ID already registered.");
+        }
+
         if (body.accountType() == AccountType.BUSINESS) {
 
             if (body.businessName() == null || body.businessName().isBlank()) {

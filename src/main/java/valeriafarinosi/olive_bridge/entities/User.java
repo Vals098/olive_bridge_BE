@@ -43,6 +43,7 @@ public class User {
     // Only for BUSINESS accounts
     private String businessName;
 
+    @Column(unique = true)
     private String businessTaxId;
 
     @Column(nullable = false)
