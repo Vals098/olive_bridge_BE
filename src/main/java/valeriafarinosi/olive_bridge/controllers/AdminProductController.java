@@ -22,20 +22,20 @@ public class AdminProductController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @GetMapping("/{productId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Product getProductById(@PathVariable UUID productId) {
         return productService.findById(productId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Product createProduct(
             @Valid @RequestBody ProductRequestDTO body
     ) {
@@ -43,7 +43,7 @@ public class AdminProductController {
     }
 
     @PutMapping("/{productId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Product updateProduct(
             @PathVariable UUID productId,
             @Valid @RequestBody ProductRequestDTO body
@@ -52,13 +52,13 @@ public class AdminProductController {
     }
 
     @DeleteMapping("/{productId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Product deleteProduct(@PathVariable UUID productId) {
         return productService.deleteProduct(productId);
     }
 
     @PatchMapping("/{productId}/activate")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Product activateProduct(@PathVariable UUID productId) {
         return productService.activateProduct(productId);
     }

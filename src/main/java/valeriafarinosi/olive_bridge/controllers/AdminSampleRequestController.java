@@ -22,7 +22,7 @@ public class AdminSampleRequestController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<SampleRequestResponseDTO> getAllSampleRequests() {
         return sampleRequestService.getAllSampleRequests();
     }

@@ -21,14 +21,14 @@ public class AdminCategoryController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Category createCategory(
             @Valid @RequestBody CategoryRequestDTO body
     ) {

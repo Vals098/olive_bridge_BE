@@ -23,14 +23,14 @@ public class AdminTechnicalInformationController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<TechnicalInformation> getAllTechnicalInformations() {
         return technicalInformationService.getAllTechnicalInformations();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public TechnicalInformation createTechnicalInformation(
             @Valid @RequestBody TechnicalInformationRequestDTO body
     ) {

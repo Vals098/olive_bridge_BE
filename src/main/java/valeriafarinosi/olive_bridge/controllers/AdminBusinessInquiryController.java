@@ -21,7 +21,7 @@ public class AdminBusinessInquiryController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<BusinessInquiryResponseDTO> getAllBusinessInquiries() {
         return businessInquiryService.getAllBusinessInquiries();
     }
