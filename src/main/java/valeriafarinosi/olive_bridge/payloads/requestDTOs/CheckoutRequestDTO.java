@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import valeriafarinosi.olive_bridge.enums.PaymentMethod;
 
 import java.util.List;
 
@@ -16,22 +18,45 @@ public record CheckoutRequestDTO(
         @Email(message = "Customer email must be valid.")
         String customerEmail,
 
-        @NotBlank(message = "Postal code is required.")
+        // SHIPPING ADDRESS
+        @NotBlank(message = "Shipping postal code is required.")
         String shippingPostalCode,
 
-        @NotBlank(message = "Prefecture is required.")
+        @NotBlank(message = "Shipping prefecture is required.")
         String shippingPrefecture,
 
-        @NotBlank(message = "City is required.")
+        @NotBlank(message = "Shipping city is required.")
         String shippingCity,
 
-        @NotBlank(message = "Area is required.")
+        @NotBlank(message = "Shipping area is required.")
         String shippingArea,
 
-        @NotBlank(message = "Street is required.")
+        @NotBlank(message = "Shipping street is required.")
         String shippingStreet,
 
         String shippingBuilding,
+
+        // BILLING ADDRESS
+        @NotBlank(message = "Billing postal code is required.")
+        String billingPostalCode,
+
+        @NotBlank(message = "Billing prefecture is required.")
+        String billingPrefecture,
+
+        @NotBlank(message = "Billing city is required.")
+        String billingCity,
+
+        @NotBlank(message = "Billing area is required.")
+        String billingArea,
+
+        @NotBlank(message = "Billing street is required.")
+        String billingStreet,
+
+        String billingBuilding,
+
+        // PAYMENT
+        @NotNull(message = "Payment method is required.")
+        PaymentMethod paymentMethod,
 
         @NotEmpty(message = "The order must contain at least one item.")
         @Valid

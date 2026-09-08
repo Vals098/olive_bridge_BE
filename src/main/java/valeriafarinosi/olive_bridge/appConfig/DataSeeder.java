@@ -68,16 +68,20 @@ public class DataSeeder implements CommandLineRunner {
                     passwordEncoder.encode("Password123!"),
                     adminRole,
                     null,
+                    null,
+                    null,
                     ActiveStatus.ACTIVE
             );
 
             User buyer = new User(
                     "Test",
-                    "Buyer",
-                    "buyer@olivebridge.com",
+                    "User",
+                    "test@olivebridge.com",
                     passwordEncoder.encode("Password123!"),
                     buyerRole,
                     AccountType.INDIVIDUAL,
+                    null,
+                    null,
                     ActiveStatus.ACTIVE
             );
 

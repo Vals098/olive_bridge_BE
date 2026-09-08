@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import valeriafarinosi.olive_bridge.enums.OrderStatus;
+import valeriafarinosi.olive_bridge.enums.PaymentMethod;
+import valeriafarinosi.olive_bridge.enums.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -40,6 +42,18 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
+
+    // Will be used if Stripe is implemented in the future.
+    // Nullable for now because we are not using Stripe yet.
+    private String stripePaymentId;
+
     // Customer may change address after making an order.
     // Old address data is needed in the order history.
     @Column(nullable = false)
@@ -62,25 +76,57 @@ public class Order {
 
     private String shippingBuilding;
 
+    @Column(nullable = false)
+    private String billingPostalCode;
+
+    @Column(nullable = false)
+    private String billingPrefecture;
+
+    @Column(nullable = false)
+    private String billingCity;
+
+    @Column(nullable = false)
+    private String billingArea;
+
+    @Column(nullable = false)
+    private String billingStreet;
+
+    private String billingBuilding;
+
     public Order(
             User user,
             String customerEmail,
             LocalDateTime orderDate,
             BigDecimal total,
             OrderStatus status,
+            PaymentMethod paymentMethod,
+            PaymentStatus paymentStatus,
+
+            // SHIPPING
             String shippingRecipientName,
             String shippingPostalCode,
             String shippingPrefecture,
             String shippingCity,
             String shippingArea,
             String shippingStreet,
-            String shippingBuilding
+            String shippingBuilding,
+
+            // BILLING
+            String billingPostalCode,
+            String billingPrefecture,
+            String billingCity,
+            String billingArea,
+            String billingStreet,
+            String billingBuilding
     ) {
         this.user = user;
         this.customerEmail = customerEmail;
         this.orderDate = orderDate;
         this.total = total;
         this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
+
         this.shippingRecipientName = shippingRecipientName;
         this.shippingPostalCode = shippingPostalCode;
         this.shippingPrefecture = shippingPrefecture;
@@ -88,5 +134,12 @@ public class Order {
         this.shippingArea = shippingArea;
         this.shippingStreet = shippingStreet;
         this.shippingBuilding = shippingBuilding;
+
+        this.billingPostalCode = billingPostalCode;
+        this.billingPrefecture = billingPrefecture;
+        this.billingCity = billingCity;
+        this.billingArea = billingArea;
+        this.billingStreet = billingStreet;
+        this.billingBuilding = billingBuilding;
     }
 }

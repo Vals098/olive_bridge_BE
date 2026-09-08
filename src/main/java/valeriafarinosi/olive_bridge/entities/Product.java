@@ -37,11 +37,10 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(
             name = "technical_information_id",
-            nullable = false,
-            unique = true
+            nullable = false
     )
     private TechnicalInformation technicalInformation;
 
@@ -52,6 +51,30 @@ public class Product {
         this.status = status;
         this.category = category;
         this.technicalInformation = technicalInformation;
+    }
+
+    public void update(
+            String name,
+            String description,
+            String image,
+            ActiveStatus status,
+            Category category,
+            TechnicalInformation technicalInformation
+    ) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.status = status;
+        this.category = category;
+        this.technicalInformation = technicalInformation;
+    }
+
+    public void deactivate() {
+        this.status = ActiveStatus.INACTIVE;
+    }
+
+    public void activate() {
+        this.status = ActiveStatus.ACTIVE;
     }
 
 

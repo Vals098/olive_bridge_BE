@@ -50,4 +50,8 @@ public class BusinessInquiry {
         this.status = status;
         this.createdAt = createdAt;
     }
+
+    public void setStatus(BusinessInquiryStatus status) {
+        this.status = status;
+    }
 }

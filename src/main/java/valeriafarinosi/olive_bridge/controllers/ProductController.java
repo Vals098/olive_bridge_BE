@@ -21,12 +21,13 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public List<Product> getActiveProducts() {
+        return productService.getActiveProducts();
     }
 
     @GetMapping("/{productId}")
     public Product findById(@PathVariable UUID productId) {
         return productService.findById(productId);
     }
+
 }
