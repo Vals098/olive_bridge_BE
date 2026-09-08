@@ -35,6 +35,8 @@ public class AuthController {
                 user.getEmail(),
                 user.getRole().getName(),
                 user.getAccountType(),
+                user.getBusinessName(),
+                user.getBusinessTaxId(),
                 user.getStatus()
         );
     }

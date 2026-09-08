@@ -12,4 +12,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByBusinessTaxId(String businessTaxId);
 
+    Optional<User> findByEmailAndUserIdNot(String email, UUID userId);
+
+    Optional<User> findByBusinessTaxIdAndUserIdNot(String businessTaxId, UUID userId);
+
 }

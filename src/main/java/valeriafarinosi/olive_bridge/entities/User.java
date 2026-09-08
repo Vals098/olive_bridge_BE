@@ -71,5 +71,20 @@ public class User {
         this.businessTaxId = businessTaxId;
         this.status = status;
     }
+
+    public void updateProfile(
+            String name,
+            String surname,
+            String email,
+            String businessName,
+            String businessTaxId
+    ) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.businessName = businessName;
+        this.businessTaxId = businessTaxId;
+    }
+
 }
 

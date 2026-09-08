@@ -12,6 +12,8 @@ public record UserResponseDTO(
         String email,
         String role,
         AccountType accountType,
+        String businessName,
+        String businessTaxId,
         ActiveStatus status
 ) {
 }
